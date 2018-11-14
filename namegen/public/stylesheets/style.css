@@ -1,6 +1,9 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    margin: auto;
+    width: 60%;
+    border: 3px solid green;
+    padding: 30px;
+    background-color: lightblue;
 }
 
 a {
