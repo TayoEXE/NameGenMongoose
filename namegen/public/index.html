@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="javascripts/names.js"></script>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+  <meta charset="utf-8">
+  <title>Random Game Name Generator Deluxe</title>
+</head>
+
+<body>
+  <div id='app' ng-app='names' ng-controller='mainCtrl'>
+    <h1>Random Game Name Generator</h1><br>
+    <h3>Are you creating a game? Can't think of a name?</h3><br>
+
+    <form id="newName" ng-submit="getName()">
+      Tap the button to get a new game name!
+      <input type="submit" value="Generate"> I hope someone creates cover art for these.
+    </form>
+
+    <div>
+      <h2>{{currentName}}</h2>
+    </div>
+
+    <form id="submitFavorite" ng-submit="addFavorite()">
+      Add name to favorites so everyone can see and vote on the name.
+      <input type="submit" value="Favorite">
+    </form>
+    
+    <ul class="list-group" ng-if='names.length' class='list center stretch'>
+      <li class="list-group-item" ng-repeat="name in favNames | orderBy: '-upvotes'" class='randName'>
+        <h2>{{name}}</h2>
+      </li>
+    </ul>
+
+  </div>
+
+</body>
+
+</html>

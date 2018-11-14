@@ -1,53 +1,52 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Comment = mongoose.model('FavName');
+var FavName = mongoose.model('FavName');
 var randomName = require('random-game-name');
 
+router.get('/generate', function(req, res, next) {
+    console.log("Enter /generate")
+    var name = randomName.random();
+    console.log(name);
+    res.send(name);
+});
 
-
-router.get('/comments', function(req, res, next) {
-    Comment.find(function(err, comments) {
+router.get('/names', function(req, res, next) {
+    FavName.find(function(err, names) {
         if (err) { return next(err); }
-        res.json(comments);
+        res.json(names);
     });
 });
 
-router.post('/comments', function(req, res, next) {
-    console.log(req.body)
-    var comment = new Comment(req.body);
-    comment.save(function(err, comment) {
+router.post('/names', function(req, res, next) {
+    console.log("Req body is " + req.body);
+    var name = new FavName(req.body);
+    name.save(function(err, comment) {
         if (err) { return next(err); }
-        console.log(comment)
-        res.json(comment);
+        console.log(name)
+        res.json(name);
     });
 });
 
-router.param('comment', function(req, res, next, id) {
-    Comment.findById(id, function(err, comment) {
+router.param('name', function(req, res, next, id) {
+    FavName.findById(id, function(err, name) {
         if (err) { return next(err); }
-        if (!comment) { return next(new Error("can't find comment")); }
-        req.comment = comment;
+        if (!name) { return next(new Error("can't find the name")); }
+        req.comment = name;
         return next();
     });
 });
 
-router.get('/comments/:comment', function(req, res) {
-    console.log("Getting comment");
-    res.json(req.comment);
+router.get('/names/:name', function(req, res) {
+    console.log("Getting name");
+    res.json(req.name);
 });
 
-router.put('/comments/:comment/upvote', function(req, res, next) {
-    req.comment.upvote(function(err, comment) {
+router.put('/names/:name/upvote', function(req, res, next) {
+    req.comment.upvote(function(err, name) {
         if (err) { return next(err); }
-        res.json(comment);
+        res.json(name);
     });
-});
-
-router.delete('/comments/:comment', function(req, res) {
-  console.log("in Delete");
-  req.comment.remove();
-  res.sendStatus(200);
 });
 
 module.exports = router;
