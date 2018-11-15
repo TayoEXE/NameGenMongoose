@@ -49,4 +49,18 @@ router.put('/names/:name/upvote', function(req, res, next) {
     });
 });
 
+router.delete('/delete', function(req, res, next) {
+    console.log("Enter /delete");
+    FavName.remove({}, function(err, list) {
+        if (err) {
+            console.log("Error delete comments on DB")
+            res.sendStatus(500);
+        }
+        else {
+            res.sendStatus(200);
+            console.log("All favorite names deleted");
+        }
+    })
+});
+
 module.exports = router;
